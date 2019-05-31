@@ -2,6 +2,7 @@ defmodule PuppeteerPdf.Generate do
   @moduledoc """
   Generate a PDF file from multiple available sources.
   """
+  require Logger
 
   @doc """
   Generate PDF file given an HTML string input
@@ -174,6 +175,8 @@ defmodule PuppeteerPdf.Generate do
           _ ->
             # In some cases when invalid values are provided the command executing
             # can hang process. This will assure that it can exit.
+            Logger.info("System Params: #{inspect params}")
+            Logger.info("System Exec Path: #{inspect exec_path}")
             task =
               Task.async(fn ->
                 case System.cmd(exec_path, params) do
